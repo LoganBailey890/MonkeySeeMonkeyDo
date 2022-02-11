@@ -21,6 +21,6 @@ namespace MonkeySeeMonkeyDo
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                });//adding a comment to test stuff
     }
 }
