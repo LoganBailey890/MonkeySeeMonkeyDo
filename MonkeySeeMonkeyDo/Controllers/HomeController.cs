@@ -28,6 +28,31 @@ namespace MonkeySeeMonkeyDo.Controllers
             return View();
         }
 
+        public IActionResult BananaRun()
+        {
+            return View();
+        }
+
+        public IActionResult MatchGame()
+        {
+            return View();
+        }
+
+        public IActionResult MonkeySnake()
+        {
+            return View();
+        }
+
+        public IActionResult MonkeySwing()
+        {
+            return View();
+        }
+
+        public IActionResult TicTacToe()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
