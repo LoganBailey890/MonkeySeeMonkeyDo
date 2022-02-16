@@ -1,29 +1,62 @@
 ﻿<!DOCTYPE html>
+@*.first-color {
+	background: #f7f7f7;
+}
+
+.second-color {
+	background: #393e46;
+}
+
+.third-color {
+	background: #5c636e;
+}
+
+.fourth-color {
+	background: #f8b500;
+}*@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MonkeySeeMonkeyDo</title>
+    <title>@ViewData["Title"] - Monkey See Monkey Do</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+<body style="background-color: #393e46; color: #f7f7f7" >
+    <header style="background-color: #5c636e ">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-transparent border-bottom box-shadow mb-3">
+            <div class="container" style="color: #f7f7f7">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MonkeySeeMonkeyDo</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" >
+                    <ul class="navbar-nav flex-grow-1" >
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Account">Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MonkeySwing">Swing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MonkeySnake">Snake</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="TicTacToe">TicTacToe</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MatchGame">Match</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="BananaRun">Banana Run</a>
                         </li>
                     </ul>
                 </div>
@@ -36,9 +69,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - MonkeySeeMonkeyDo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top footer text-dark" style="background-color: #5c636e">
+        <div class="container" style="color: #f7f7f7">
+            &copy; @DateTime.Today.Year - MonkeySeeMonkeyDo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
