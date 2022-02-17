@@ -61,9 +61,11 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    background-image: src(../Images/Chain/Chain_Banana.png);
+    color: #719192;
+    background-image: url(../Images/Chain/Chain_Banana.png);
+    background-size: 100px;
+    background-repeat: repeat;
     background-color: #393e46;
-    color: #f7f7f7;
 }
 
 .footer {
