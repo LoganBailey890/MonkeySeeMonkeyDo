@@ -20,14 +20,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Monkey See Monkey Do</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<<<<<<< HEAD
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="~/js/phaser.js"></script>
+=======
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+>>>>>>> 5ed919f9dfe7802d103415e00b1bf5e778c9a533
 </head>
-<body style="background-color: #393e46; color: #f7f7f7" >
-    <header style="background-color: #5c636e ">
+<body>
+    <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-transparent border-bottom box-shadow mb-3">
-            <div class="container" style="color: #f7f7f7">
+            <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MonkeySeeMonkeyDo</a>
+                <img src="~/Images/pixel-monkey.png" height="40" width="40" />
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -69,8 +75,8 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-dark" style="background-color: #5c636e">
-        <div class="container" style="color: #f7f7f7">
+    <footer class="border-top footer text-dark">
+        <div class="container">
             &copy; @DateTime.Today.Year - MonkeySeeMonkeyDo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

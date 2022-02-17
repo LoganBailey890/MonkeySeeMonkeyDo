@@ -59,16 +59,33 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    color: #f7f7f7;
+    background-image: url(../Images/Chain/Chain_Banana.png);
+    background-size: 100px;
+    background-repeat: repeat;
+    background-color: #393e46;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: #5c636e;
+    color: #f7f7f7;
 }
+header {
+    background-color: #5c636e;
+    color: #f7f7f7;
+}
+
+div {
+    color: #f7f7f7;
+}
+
 
 /*Colors added by me*/
 
