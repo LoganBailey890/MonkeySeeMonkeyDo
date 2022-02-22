@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MonkeySeeMonkeyDo.Services;
 
 namespace MonkeySeeMonkeyDo
 {
@@ -24,6 +25,7 @@ namespace MonkeySeeMonkeyDo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

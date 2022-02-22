@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using MonkeySeeMonkeyDo.Models;
 
@@ -11,9 +12,11 @@ namespace MonkeySeeMonkeyDo.Services
     {
         private readonly IMongoCollection<UsersAccount> user;
 
-        public UserService()
+        public UserService(IConfiguration config)
         {
-            //MongoClient client = new MongoClient()
+            MongoClient client = new MongoClient(config.GetConnectionString("MonkeySeeMonkeyDoDB"));
+            IMongoDatabase database = client.GetDatabase("MonkeySeeMonkeyDoDB");
+            user = database.GetCollection<UsersAccount>("User");
         }
 
         public List<UsersAccount> Get()
