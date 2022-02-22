@@ -1,5 +1,14 @@
-﻿@*
-    
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Monkey See Monkey Do ™";
 }
+
+<div class="text-center">
+    <img src="~/images/Chain/Chain_Logo.png" />
+    <img id ="monkey" src="~/images/Chain/Chain_Monkey.png" />
+</div>
+
+<div id="Game" class="text-center">
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <script src="~/js/MonkeyChain.js"></script>
+    
+</div>
