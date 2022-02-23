@@ -21,6 +21,8 @@ var bananaImg = new Image();
 bananaImg.onload = imgLoaded;
 bananaImg.src = "/images/Chain/Chain_Banana.png";
 
+let score = 0;
+
 let dx = 0;
 
 let dy = -20;
@@ -45,12 +47,39 @@ function imgLoaded() {
 
     document.addEventListener("keydown", changeDirection);  
 
+
+
     createFood();
   
 }
 
 function main() {
     
+    if (didGameEnd()) {
+        
+        game.font = "25px Courier New";
+
+        game.fillStyle = "white";
+ 
+        game.fillText("GAME OVER :(", 300, 300);
+
+        game.fillStyle = "black";
+
+        // SUBMIT SCORE HERE
+
+        setTimeout(function onTick() {
+            restartGame();
+        }, 3000)
+
+        /*
+        var restartBtn = document.createElement("BUTTON");
+        var restartTxt = document.createTextNode("RESTART");
+        restartBtn.appendChild(restartTxt);
+        document.body.appendChild(restartBtn);
+        restartBtn.tra
+        */
+        return;
+    }
 
     setTimeout(function onTick() {
         changingDirection = false;
@@ -58,20 +87,41 @@ function main() {
         advanceChain();
         drawFood();
         drawChain(); main();
+        drawScore();
     }, 100)
 }
 
+function restartGame() {
+    clearCanvas();
+    chain =
+        [
+            { x: 400, y: 300 },
+            { x: 400, y: 320 },
+            { x: 400, y: 340 },
+            { x: 400, y: 360 }
+        ]
 
+    score = 0;
+
+    dx = 0;
+
+    dy = -20;
+
+    changingDirection = false;
+
+    main();
+
+}
 
 function advanceChain() {
     const head = { x: chain[0].x + dx, y: chain[0].y + dy };
-
-  
 
     chain.unshift(head); 
 
     const didEatFood = chain[0].x === foodX && chain[0].y === foodY;
     if (didEatFood) {
+
+        score += 25;
         // Generate new food location
         createFood();
     } else {
@@ -144,9 +194,34 @@ function changeDirection(event) {
         dx = 0;
         dy = 20;
     }
+
+
 }
+
+    function didGameEnd() {
+    for (let i = 4; i < chain.length; i++) {
+        if (chain[i].x === chain[0].x && chain[i].y === chain[0].y) return true
+    }
+
+    const hitLeftWall = chain[0].x < 0;
+    const hitRightWall = chain[0].x > gameCanvas.width - 20;
+    const hitToptWall = chain[0].y < 0;
+    const hitBottomWall = chain[0].y > gameCanvas.height - 20;
+
+    return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall
+}
+
 
 function randomTwenty(min, max) {
     return Math.round((Math.random() * (max - min) + min) / 20) * 20;
 }
 
+function drawScore() {
+    game.font = "25px Courier New";
+
+    game.fillStyle = "white";
+
+    game.fillText(score, 10, 35);
+
+    game.fillStyle = "black";
+}
