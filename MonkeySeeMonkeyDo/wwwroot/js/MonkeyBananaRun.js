@@ -5,6 +5,12 @@ ctx.fillStyle = 'white';
 
 ctx.fillRect(0, 0, Canvas.clientWidth, Canvas.clientHeight);
 
+var monkeyImg = new Image();
+monkeyImg.src = "/images/Run/Monkee.png";
+
+var crateImg = new Image();
+crateImg.src = "/images/Run/BoxPog.png";
+
 // Variables
 let score;
 let scoreText;
@@ -79,10 +85,7 @@ class Player {
     }
 
     Draw() {
-        ctx.beginPath();
-        ctx.fillStyle = this.c;
-        ctx.fillRect(this.x, this.y, this.w, this.h);
-        ctx.closePath();
+        ctx.drawImage(monkeyImg, this.x, this.y);
     }
 }
 
@@ -104,10 +107,7 @@ class Obstacle {
     }
 
     Draw() {
-        ctx.beginPath();
-        ctx.fillStyle = this.c;
-        ctx.fillRect(this.x, this.y, this.w, this.h);
-        ctx.closePath();
+        ctx.drawImage(crateImg, this.x, this.y);
     }
 }
 
