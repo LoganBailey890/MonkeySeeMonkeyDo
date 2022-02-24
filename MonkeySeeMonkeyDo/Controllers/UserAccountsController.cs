@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MonkeySeeMonkeyDo.Services;
+using MonkeySeeMonkeyDo.Models;
 
 namespace MonkeySeeMonkeyDo.Controllers
 {
@@ -37,16 +38,15 @@ namespace MonkeySeeMonkeyDo.Controllers
         // POST: UserAccountsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(UsersAccount user)
         {
-            try
+            if(ModelState.IsValid)
             {
+                userService.Create(user);
                 return RedirectToAction(nameof(Index));
+
             }
-            catch
-            {
-                return View();
-            }
+            return View(user);
         }
 
         // GET: UserAccountsController/Edit/5
