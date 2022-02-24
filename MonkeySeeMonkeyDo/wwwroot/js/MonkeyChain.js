@@ -14,12 +14,56 @@ game.fillStyle = 'black';
 
 game.fillRect(0, 0, gameCanvas.clientWidth, gameCanvas.clientHeight);
 
-var monkeyImg = new Image();
-monkeyImg.src = "/images/Chain/Chain_Monkey.png";
+
+
+var monkeyHeadU = new Image();
+monkeyHeadU.src = "/images/Chain/Chain_Monkey_Head_U.png";
+
+var monkeyHeadD= new Image();
+monkeyHeadD.src = "/images/Chain/Chain_Monkey_Head_D.png";
+
+var monkeyHeadL = new Image();
+monkeyHeadL.src = "/images/Chain/Chain_Monkey_Head_L.png";
+
+var monkeyHeadR= new Image();
+monkeyHeadR.src = "/images/Chain/Chain_Monkey_Head_R.png";
+
+
+
+var monkeyBodyU = new Image();
+monkeyBodyU.src = "/images/Chain/Chain_Monkey_Body_U.png";
+
+var monkeyBodyD = new Image();
+monkeyBodyD.src = "/images/Chain/Chain_Monkey_Body_D.png";
+
+var monkeyBodyL = new Image();
+monkeyBodyL.src = "/images/Chain/Chain_Monkey_Body_L.png";
+
+var monkeyBodyR = new Image();
+monkeyBodyR.src = "/images/Chain/Chain_Monkey_Body_R.png";
+
+
+
+
+var monkeyEndU = new Image();
+monkeyEndU.src = "/images/Chain/Chain_Monkey_End_U.png";
+
+var monkeyEndD = new Image();
+monkeyEndD.src = "/images/Chain/Chain_Monkey_End_D.png";
+
+var monkeyEndL = new Image();
+monkeyEndL.src = "/images/Chain/Chain_Monkey_End_L.png";
+
+var monkeyEndR = new Image();
+monkeyEndR.src = "/images/Chain/Chain_Monkey_End_R.png";
+
+
+
 
 var bananaImg = new Image();
 bananaImg.onload = imgLoaded;
 bananaImg.src = "/images/Chain/Chain_Banana.png";
+
 
 let score = 0;
 
@@ -29,14 +73,23 @@ let dy = -20;
 
 let changingDirection = false;
 
+let direction = 1;
 
+// d -:
+// 1 = UP | 2 = RIGHT | 3 = DOWN | 4 = LEFT
+
+
+let bodyPart = 1;
+
+// bodyPart -:
+// 1 = HEAD | 2 = BODY | 3 = END
 
 let chain =
     [
-        { x: 400, y: 300 },
-        { x: 400, y: 320 },
-        { x: 400, y: 340 },
-        { x: 400, y: 360 }
+        { x: 400, y: 300, d: 1, b: 1},
+        { x: 400, y: 320, d: 1, b: 2},
+        { x: 400, y: 340, d: 1, b: 2},
+        { x: 400, y: 360, d: 1, b: 3}
     ]
 
 function imgLoaded() {
@@ -114,9 +167,41 @@ function restartGame() {
 }
 
 function advanceChain() {
-    const head = { x: chain[0].x + dx, y: chain[0].y + dy };
+
+
+    const head = { x: chain[0].x + dx, y: chain[0].y + dy, d: 1 , b: 1};
+
+    switch (direction) {
+        case 1:
+
+            head.d = 1;
+
+            break;
+
+        case 2:
+
+            head.d = 2;
+
+            break;
+
+        case 3:
+
+            head.d = 3;
+
+            break;
+
+        case 4:
+
+            head.d = 4;
+           
+            break;
+    }
+
+    
 
     chain.unshift(head); 
+
+
 
     const didEatFood = chain[0].x === foodX && chain[0].y === foodY;
     if (didEatFood) {
@@ -128,15 +213,84 @@ function advanceChain() {
         // Remove the last part of snake body
         chain.pop();
     }
+
+    chain[0].b = 1;
+    chain[chain.length - 1].b = 3
+
+    for (i = 1; i < (chain.length - 2); i   ++)
+    {
+        chain[i].b = 2;
+    }
 }
+
 
 function drawChain() {
     chain.forEach(drawChainPart)
 }
 
 function drawChainPart(chainPart) {
-    console.log("Chain: " + chainPart.x + " | " + chainPart.y);
-    game.drawImage(monkeyImg, chainPart.x, chainPart.y);
+    console.log("Chain: " + chainPart.x + " | " + chainPart.y + " | D: " + chainPart.d + " | B: " + chainPart.b);
+
+    switch (chainPart.b) {
+        case 1:
+
+            switch (chainPart.d) {
+                case 1:
+                    game.drawImage(monkeyHeadU, chainPart.x, chainPart.y);
+                    break
+                case 2:
+                    game.drawImage(monkeyHeadR, chainPart.x, chainPart.y);
+                    break;
+                case 3:
+                    game.drawImage(monkeyHeadD, chainPart.x, chainPart.y);
+                    break;
+                case 4:
+                    game.drawImage(monkeyHeadL, chainPart.x, chainPart.y);
+                    break;
+            }
+
+            break;
+
+        case 2:
+
+            switch (chainPart.d) {
+                case 1:
+                    game.drawImage(monkeyBodyU, chainPart.x, chainPart.y);
+                    break
+                case 2:
+                    game.drawImage(monkeyBodyR, chainPart.x, chainPart.y);
+                    break;
+                case 3:
+                    game.drawImage(monkeyBodyD, chainPart.x, chainPart.y);
+                    break;
+                case 4:
+                    game.drawImage(monkeyBodyL, chainPart.x, chainPart.y);
+                    break;
+            }
+
+            break;
+
+        case 3:
+
+            switch (chainPart.d) {
+                case 1:
+                    game.drawImage(monkeyEndU, chainPart.x, chainPart.y);
+                    break
+                case 2:
+                    game.drawImage(monkeyEndR, chainPart.x, chainPart.y);
+                    break;
+                case 3:
+                    game.drawImage(monkeyEndD, chainPart.x, chainPart.y);
+                    break;
+                case 4:
+                    game.drawImage(monkeyEndL, chainPart.x, chainPart.y);
+                    break;
+            }
+
+            break;
+
+
+}
 }
 
 function createFood() {
@@ -144,6 +298,12 @@ function createFood() {
     foodY = randomTwenty(0, gameCanvas.height - 20);
 
     console.log("Food: " + foodX + " | " + foodY);
+
+    chain.forEach(function isChain(part) {
+        const isBanana= part.x == foodX && part.y == foodY;
+        if (isBanana) createFood();
+    });
+
 }
 
 function drawFood() {
@@ -182,15 +342,19 @@ function changeDirection(event) {
 
     // Setting up the keypress responses
     if (keyPressed === LEFT_KEY && !goingRight) {
+        direction = 4;
         dx = -20;
         dy = 0;
     } if (keyPressed === UP_KEY && !goingDown) {
+        direction = 1;
         dx = 0;
         dy = -20;
     } if (keyPressed === RIGHT_KEY && !goingLeft) {
+        direction = 2;
         dx = 20;
         dy = 0;
-    } if (keyPressed === DOWN_KEY && !goingDown) {
+    } if (keyPressed === DOWN_KEY && !goingUp) {
+        direction = 3;  
         dx = 0;
         dy = 20;
     }
