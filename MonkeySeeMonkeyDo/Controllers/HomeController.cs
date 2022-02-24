@@ -59,6 +59,11 @@ namespace MonkeySeeMonkeyDo.Controllers
             return View();
         }
 
+        public IActionResult Create()
+        {
+            return View("../UserAccounts/Create");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
