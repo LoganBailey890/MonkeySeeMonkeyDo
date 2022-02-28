@@ -6,6 +6,9 @@ const UP_KEY = 38;
 const DOWN_KEY = 40; const keyPressed = event.keyCode;
 */
 
+
+// CREATE CANVAS
+
 var gameCanvas = document.getElementById("gameCanvas");
 
 var game = gameCanvas.getContext("2d");
@@ -14,6 +17,8 @@ game.fillStyle = 'black';
 
 game.fillRect(0, 0, gameCanvas.clientWidth, gameCanvas.clientHeight);
 
+
+// LOAD IMAGES
 
 
 var monkeyHeadU = new Image();
@@ -85,13 +90,13 @@ monkeyElbowRU.src = "/images/Chain/Chain_Monkey_Elbow_RU.png";
 
 
 
-
-
-
 var bananaImg = new Image();
 bananaImg.onload = imgLoaded;
 bananaImg.src = "/images/Chain/Chain_Banana.png";
 
+
+
+// SET GLOBAL VARIABLES
 
 let score = 0;
 
@@ -114,6 +119,8 @@ let bodyPart = 1;
 // bodyPart -:
 // 1 = HEAD | 2 = BODY | 3 = END  >>>>  4-11 = ELBOWS |
 
+// STARTING SNAKE
+
 let chain =
     [
         { x: 400, y: 300, d: 1, b: 1},
@@ -121,6 +128,9 @@ let chain =
         { x: 400, y: 340, d: 1, b: 2},
         { x: 400, y: 360, d: 1, b: 3}
     ]
+
+
+// ON IMAGE LOAD START
 
 function imgLoaded() {
 
@@ -136,8 +146,14 @@ function imgLoaded() {
   
 }
 
+
+// MAIN FUNC GAME RUN
+
 function main() {
-    
+
+
+    // RESET
+
     if (didGameEnd()) {
         
         game.font = "25px Courier New";
@@ -164,6 +180,8 @@ function main() {
         return;
     }
 
+
+    // MAIN LOOP
     setTimeout(function onTick() {
         changingDirection = false;
         clearCanvas();
@@ -171,8 +189,10 @@ function main() {
         drawFood();
         drawChain(); main();
         drawScore();
-    }, 800)
+    }, 100)
 }
+
+// GAME RESET GLOBAL VALUES
 
 function restartGame() {
     clearCanvas();
@@ -198,10 +218,15 @@ function restartGame() {
 
 }
 
+
+// MOVING 
 function advanceChain() {
 
-
+    // CREATE NEW HEAD
     const head = { x: chain[0].x + dx, y: chain[0].y + dy, d: 1 , b: 1};
+
+
+    // FIND DIRECTION
 
     switch (direction) {
         case 1:
@@ -230,10 +255,11 @@ function advanceChain() {
     }
 
     
-
+    // PUT HEAD ON TOP OF ARRAY
     chain.unshift(head); 
 
-
+    
+    // IF FOOD KEEP LAST ON ARRAY | IF NOT POP LAST OFF ARRAY TO KEEP LENGTH
 
     const didEatFood = chain[0].x === foodX && chain[0].y === foodY;
     if (didEatFood) {
@@ -246,9 +272,12 @@ function advanceChain() {
         chain.pop();
     }
 
+
+    // HEAD BODYPART ALWAYS = 1
     chain[0].b = 1;
 
 
+    //  LOGIC FOR END OF TAIL DIRECTION ON TURNING
 
     if (chain[chain.length - 2].d != chain[chain.length - 1].d) {
 
@@ -276,10 +305,16 @@ function advanceChain() {
         }
 
     }
-    
+
+    // SETTING END OF CHAIN TO TAIL BODYPART
      chain[chain.length - 1].b = 3
 
     
+
+
+    // FUNKY BUSINESS TIME
+
+    // FOR : BODY PARTS // CHECK IF ROTATED AND USE ELBOW FOR RESPECTIVE TURN ANGLE
 
     for (i = 1; i < (chain.length - 2); i++)
     {
@@ -318,7 +353,7 @@ function advanceChain() {
                 }
 
 
-            // TEST
+            // REPEATED TURNS
 
                 else if (chain[i - 1].d == 1 && chain[i + 1].d == 1) {
                     switch (chain[i].d) {
@@ -364,9 +399,13 @@ function advanceChain() {
                     }
                 }
 
+                // THIS IS GONNA SUCK, THIS LOGIC SUCKS, I SUCK, SUCK, D:
+                    
+
                 // TEST 2
 
-               /* else if (chain[i - 1].d == 2 && chain[i + 1].d == 4) {
+                /*
+                 else if (chain[i - 1].d == 2 && chain[i + 1].d == 4) {
                     switch (chain[i].d) {
                         case 1:
                             chain[i].b = 3;
@@ -408,30 +447,41 @@ function advanceChain() {
                             chain[i].b = 3;
                             break;
                     }
-                }*/
+                }
+                */
 
+
+
+                // ELSE JUST MAKE IT LONG BOI (REGULAR BODY PART)
                 else chain[i].b = 2;
 
 
-                drawDebug(chain, i);
+                //drawDebug(chain, i);
 
         }
 
+        // SAFEGUARD REGULAR BODY PART 
         else  chain[i].b = 2;
   
     }
 }
 
-
+// DRAW CHAIN
 
 function drawChain() {
+    // JUST DRAW EACH PART LOL 
     chain.forEach(drawChainPart)
 }
+
+
+// DRAWING EACH PART
 
 function drawChainPart(chainPart) {
     //console.log("Chain: " + chainPart.x + " | " + chainPart.y + " | D: " + chainPart.d + " | B: " + chainPart.b);
     //console.log(" D: " + chainPart.d + " | B: " + chainPart.b);
-    
+
+
+    // FINDING WHICH IMAGE TO DRAW, JUST INPUT VALUE LOGIC
     switch (chainPart.b) {
         case 1:
 
@@ -542,7 +592,7 @@ function drawChainPart(chainPart) {
     }
 }
 
-
+// CREATE FOOD RANDOMLY POSITIONED ON GRID
 
 function createFood() {
     foodX = randomTwenty(0, gameCanvas.width - 20);
@@ -557,9 +607,14 @@ function createFood() {
 
 }
 
+// JUST DRAW THE IMAGE LOL
+
 function drawFood() {
     game.drawImage(bananaImg, foodX, foodY);
 }
+
+
+// FRAME RESET FOR EACH TICK | FOR CANVAS REDRAW EACH FRAME
 
 function clearCanvas() {
     //  Select the colour to fill the drawing
@@ -572,6 +627,8 @@ function clearCanvas() {
     // Draw a "border" around the entire canvas
     game.strokeRect(0, 0, gameCanvas.width, gameCanvas.height);
 }
+
+// KEY RECOGNITION AND DIRECTION CHANGE
 
 function changeDirection(event) {
 
@@ -613,6 +670,8 @@ function changeDirection(event) {
 
 }
 
+    // DID YOU DIE | CHECKS FOR WALL HITS | SELF HITS
+
     function didGameEnd() {
     for (let i = 4; i < chain.length; i++) {
         if (chain[i].x === chain[0].x && chain[i].y === chain[0].y) return true
@@ -626,11 +685,13 @@ function changeDirection(event) {
     return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall
 }
 
-
+// random min max 20 clamp
 function randomTwenty(min, max) {
     return Math.round((Math.random() * (max - min) + min) / 20) * 20;
 }
 
+
+// DRAW THE SCORE ON SCREEN
 function drawScore() {
     game.font = "25px Courier New";
 
@@ -641,7 +702,7 @@ function drawScore() {
     game.fillStyle = "black";
 }
 
-
+// COOL DEBUG :) ME LIKE ME MAKE ME COOL
 function drawDebug(chain, count) {
     game.font = "25px Courier New";
 
