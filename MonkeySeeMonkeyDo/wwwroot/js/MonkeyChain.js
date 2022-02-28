@@ -59,6 +59,21 @@ monkeyEndR.src = "/images/Chain/Chain_Monkey_End_R.png";
 
 
 
+var monkeyElbow1 = new Image();
+monkeyElbow1.src = "/images/Chain/Elbow_1.png";
+
+var monkeyElbow2 = new Image();
+monkeyElbow1.src = "/images/Chain/Elbow_2.png";
+
+var monkeyElbow3 = new Image();
+monkeyElbow1.src = "/images/Chain/Elbow_3.png";
+
+var monkeyElbow4 = new Image();
+monkeyElbow1.src = "/images/Chain/Elbow_4.png";
+
+
+
+
 
 var bananaImg = new Image();
 bananaImg.onload = imgLoaded;
@@ -82,7 +97,7 @@ let direction = 1;
 let bodyPart = 1;
 
 // bodyPart -:
-// 1 = HEAD | 2 = BODY | 3 = END
+// 1 = HEAD | 2 = BODY | 3 = END | 4 ELBOW |
 
 let chain =
     [
@@ -148,10 +163,10 @@ function restartGame() {
     clearCanvas();
     chain =
         [
-            { x: 400, y: 300 },
-            { x: 400, y: 320 },
-            { x: 400, y: 340 },
-            { x: 400, y: 360 }
+        { x: 400, y: 300, d: 1, b: 1 },
+        { x: 400, y: 320, d: 1, b: 2 },
+        { x: 400, y: 340, d: 1, b: 2 }, 
+        { x: 400, y: 360, d: 1, b: 3 }
         ]
 
     score = 0;
@@ -159,6 +174,8 @@ function restartGame() {
     dx = 0;
 
     dy = -20;
+
+    direction = 1;
 
     changingDirection = false;
 
@@ -217,9 +234,14 @@ function advanceChain() {
     chain[0].b = 1;
     chain[chain.length - 1].b = 3
 
-    for (i = 1; i < (chain.length - 2); i   ++)
+    for (i = 1; i < (chain.length - 2); i++)
     {
-        chain[i].b = 2;
+       /* if (chain[i - 1].d != chain[i].d) {
+            chain[i].b = 4;
+        }
+        else {*/
+            chain[i].b = 2;
+        /*}*/
     }
 }
 
@@ -289,8 +311,27 @@ function drawChainPart(chainPart) {
 
             break;
 
+        case 4:
 
-}
+            switch (chainPart.d) {
+                case 1:
+                    game.drawImage(monkeyElbow1, chainPart.x, chainPart.y);
+                    break
+                case 2:
+                    game.drawImage(monkeyElbow2, chainPart.x, chainPart.y);
+                    break;
+                case 3:
+                    game.drawImage(monkeyElbow3, chainPart.x, chainPart.y);
+                    break;
+                case 4:
+                    game.drawImage(monkeyElbow4, chainPart.x, chainPart.y);
+                    break;
+
+            }
+                    break;
+
+
+    }
 }
 
 function createFood() {
