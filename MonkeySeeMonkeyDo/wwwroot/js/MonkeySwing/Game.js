@@ -1,4 +1,6 @@
-﻿var config = {
+﻿var DEBUG = false;
+
+var config = {
     type: Phaser.AUTO,
     width: 1200,
     height: 700,
@@ -94,11 +96,13 @@ function update() {
         this.physics.moveToObject(player, target, 400);
     } 
 
-    text1.setText([
-        'x: ' + pointer.worldX,
-        'y: ' + pointer.worldY,
-        'isDown: ' + pointer.isDown
-    ]);
+    if (DEBUG == true) {
+        text1.setText([
+            'x: ' + pointer.worldX,
+            'y: ' + pointer.worldY,
+            'isDown: ' + pointer.isDown
+        ]);
+    }
 
     var distance = Phaser.Math.Distance.Between(player.x, player.y, target.x, target.y);
 
