@@ -90,7 +90,7 @@ namespace MonkeySeeMonkeyDo.Controllers
 
         public ActionResult Login(string userName, string Password)
         {
-
+            return View(userName, Password);
         }
 
 
