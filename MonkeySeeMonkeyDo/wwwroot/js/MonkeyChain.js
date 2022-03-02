@@ -6,6 +6,9 @@ const UP_KEY = 38;
 const DOWN_KEY = 40; const keyPressed = event.keyCode;
 */
 
+
+// CREATE CANVAS
+
 var gameCanvas = document.getElementById("gameCanvas");
 
 var game = gameCanvas.getContext("2d");
@@ -14,6 +17,8 @@ game.fillStyle = 'black';
 
 game.fillRect(0, 0, gameCanvas.clientWidth, gameCanvas.clientHeight);
 
+
+// LOAD IMAGES
 
 
 var monkeyHeadU = new Image();
@@ -59,11 +64,39 @@ monkeyEndR.src = "/images/Chain/Chain_Monkey_End_R.png";
 
 
 
+var monkeyElbowDL = new Image();
+monkeyElbowDL.src = "/images/Chain/Chain_Monkey_Elbow_DL.png";
+
+var monkeyElbowDR = new Image();
+monkeyElbowDR.src = "/images/Chain/Chain_Monkey_Elbow_DR.png";
+
+var monkeyElbowLD = new Image();
+monkeyElbowLD.src = "/images/Chain/Chain_Monkey_Elbow_LD.png";
+
+var monkeyElbowRD = new Image();
+monkeyElbowRD.src = "/images/Chain/Chain_Monkey_Elbow_RD.png";
+
+var monkeyElbowUL = new Image();
+monkeyElbowUL.src = "/images/Chain/Chain_Monkey_Elbow_UL.png";
+
+var monkeyElbowUR = new Image();
+monkeyElbowUR.src = "/images/Chain/Chain_Monkey_Elbow_UR.png";
+
+var monkeyElbowLU = new Image();
+monkeyElbowLU.src = "/images/Chain/Chain_Monkey_Elbow_LU.png";
+
+var monkeyElbowRU = new Image();
+monkeyElbowRU.src = "/images/Chain/Chain_Monkey_Elbow_RU.png";
+
+
 
 var bananaImg = new Image();
 bananaImg.onload = imgLoaded;
 bananaImg.src = "/images/Chain/Chain_Banana.png";
 
+
+
+// SET GLOBAL VARIABLES
 
 let score = 0;
 
@@ -75,6 +108,8 @@ let changingDirection = false;
 
 let direction = 1;
 
+let wasTurnedLast = false;
+
 // d -:
 // 1 = UP | 2 = RIGHT | 3 = DOWN | 4 = LEFT
 
@@ -82,7 +117,9 @@ let direction = 1;
 let bodyPart = 1;
 
 // bodyPart -:
-// 1 = HEAD | 2 = BODY | 3 = END
+// 1 = HEAD | 2 = BODY | 3 = END  >>>>  4-11 = ELBOWS |
+
+// STARTING SNAKE
 
 let chain =
     [
@@ -91,6 +128,9 @@ let chain =
         { x: 400, y: 340, d: 1, b: 2},
         { x: 400, y: 360, d: 1, b: 3}
     ]
+
+
+// ON IMAGE LOAD START
 
 function imgLoaded() {
 
@@ -106,8 +146,14 @@ function imgLoaded() {
   
 }
 
+
+// MAIN FUNC GAME RUN
+
 function main() {
-    
+
+
+    // RESET
+
     if (didGameEnd()) {
         
         game.font = "25px Courier New";
@@ -134,6 +180,8 @@ function main() {
         return;
     }
 
+
+    // MAIN LOOP
     setTimeout(function onTick() {
         changingDirection = false;
         clearCanvas();
@@ -141,17 +189,20 @@ function main() {
         drawFood();
         drawChain(); main();
         drawScore();
+        drawCredit();
     }, 100)
 }
+
+// GAME RESET GLOBAL VALUES
 
 function restartGame() {
     clearCanvas();
     chain =
         [
-            { x: 400, y: 300 },
-            { x: 400, y: 320 },
-            { x: 400, y: 340 },
-            { x: 400, y: 360 }
+        { x: 400, y: 300, d: 1, b: 1 },
+        { x: 400, y: 320, d: 1, b: 2 },
+        { x: 400, y: 340, d: 1, b: 2 }, 
+        { x: 400, y: 360, d: 1, b: 3 }
         ]
 
     score = 0;
@@ -160,16 +211,23 @@ function restartGame() {
 
     dy = -20;
 
+    direction = 1;
+
     changingDirection = false;
 
     main();
 
 }
 
+
+// MOVING 
 function advanceChain() {
 
-
+    // CREATE NEW HEAD
     const head = { x: chain[0].x + dx, y: chain[0].y + dy, d: 1 , b: 1};
+
+
+    // FIND DIRECTION
 
     switch (direction) {
         case 1:
@@ -198,10 +256,11 @@ function advanceChain() {
     }
 
     
-
+    // PUT HEAD ON TOP OF ARRAY
     chain.unshift(head); 
 
-
+    
+    // IF FOOD KEEP LAST ON ARRAY | IF NOT POP LAST OFF ARRAY TO KEEP LENGTH
 
     const didEatFood = chain[0].x === foodX && chain[0].y === foodY;
     if (didEatFood) {
@@ -214,23 +273,216 @@ function advanceChain() {
         chain.pop();
     }
 
-    chain[0].b = 1;
-    chain[chain.length - 1].b = 3
 
-    for (i = 1; i < (chain.length - 2); i   ++)
+    // HEAD BODYPART ALWAYS = 1
+    chain[0].b = 1;
+
+
+    //  LOGIC FOR END OF TAIL DIRECTION ON TURNING
+
+    if (chain[chain.length - 2].d != chain[chain.length - 1].d) {
+
+        switch (chain[chain.length - 1].d) {
+            case 1:
+                chain[chain.length - 1].d = chain[chain.length - 2].d;
+
+                break;
+
+            case 2:
+                chain[chain.length - 1].d = chain[chain.length - 2].d;
+
+                break;
+
+            case 3:
+                chain[chain.length - 1].d = chain[chain.length - 2].d;
+
+                break;
+
+            case 4:
+                chain[chain.length - 1].d = chain[chain.length - 2].d;
+
+                break;
+            
+        }
+
+    }
+
+    // SETTING END OF CHAIN TO TAIL BODYPART
+     chain[chain.length - 1].b = 3
+
+    
+
+
+    // FUNKY BUSINESS TIME
+
+    // FOR : BODY PARTS // CHECK IF ROTATED AND USE ELBOW FOR RESPECTIVE TURN ANGLE
+
+    for (i = 1; i < (chain.length - 2); i++)
     {
-        chain[i].b = 2;
+            if (chain[i - 1].d != chain[i].d) {
+
+                if (chain[i - 1].d == 1 && chain[i + 1].d == 2) {
+                    chain[i].b = 11;
+                }
+
+                else if (chain[i - 1].d == 2 && chain[i + 1].d == 3) {
+                    chain[i].b = 10;
+                }
+
+                else if (chain[i - 1].d == 3 && chain[i + 1].d == 4) {
+                    chain[i].b = 9;
+                }
+
+                else if (chain[i - 1].d == 4 && chain[i + 1].d == 1) {
+                    chain[i].b = 8;
+                }
+
+                else if (chain[i - 1].d == 1 && chain[i + 1].d == 4) {
+                    chain[i].b = 7;
+                }
+
+                else if (chain[i - 1].d == 4 && chain[i + 1].d == 3) {
+                    chain[i].b = 6;
+                }
+
+                else if (chain[i - 1].d == 3 && chain[i + 1].d == 2) {
+                    chain[i].b = 5;
+                }
+
+                else if (chain[i - 1].d == 2 && chain[i + 1].d == 1) {
+                    chain[i].b = 4;
+                }
+
+
+            // REPEATED TURNS
+
+                else if (chain[i - 1].d == 1 && chain[i + 1].d == 1) {
+                    switch (chain[i].d) {
+                        case 2:
+                            chain[i].b = 11;
+                            break;
+                        case 4:
+                            chain[i].b = 7;
+                            break;
+                    }
+                }
+
+                else if (chain[i - 1].d == 2 && chain[i + 1].d == 2) {
+                    switch (chain[i].d) {
+                        case 1:
+                            chain[i].b = 9;
+                            break;
+                        case 3:
+                            chain[i].b = 10;
+                            break;
+                    }
+                }
+
+                else if (chain[i - 1].d == 3 && chain[i + 1].d == 3) {
+                    switch (chain[i].d) {
+                        case 2:
+                            chain[i].b = 5;
+                            break;
+                        case 4:
+                            chain[i].b = 9;
+                            break;
+                    }
+                }
+
+                else if (chain[i - 1].d == 4  && chain[i + 1].d == 4) {
+                    switch (chain[i].d) {
+                        case 1:
+                            chain[i].b = 8;
+                            break;
+                        case 3:
+                            chain[i].b = 6  ;
+                            break;
+                    }
+                }
+
+                // THIS IS GONNA SUCK, THIS LOGIC SUCKS, I SUCK, SUCK, D:
+                    
+
+                // TEST 2
+
+                /*
+                 else if (chain[i - 1].d == 2 && chain[i + 1].d == 4) {
+                    switch (chain[i].d) {
+                        case 1:
+                            chain[i].b = 3;
+                            break;
+                        case 3:
+                            chain[i].b = 3;
+                            break;
+                    }
+                }
+
+                else if (chain[i - 1].d == 4 && chain[i + 1].d == 2) {
+                    switch (chain[i].d) {
+                        case 1:
+                            chain[i].b = 3;
+                            break;
+                        case 3:
+                            chain[i].b = 3;
+                            break;
+                    }
+                }
+
+                else if (chain[i - 1].d == 1 && chain[i + 1].d == 3) {
+                    switch (chain[i].d) {
+                        case 1:
+                            chain[i].b = 3;
+                            break;
+                        case 3:
+                            chain[i].b = 3;
+                            break;
+                    }
+                }
+
+                else if (chain[i - 1].d == 3 && chain[i + 1].d == 1) {
+                    switch (chain[i].d) {
+                        case 1:
+                            chain[i].b = 3;
+                            break;
+                        case 3:
+                            chain[i].b = 3;
+                            break;
+                    }
+                }
+                */
+
+
+
+                // ELSE JUST MAKE IT LONG BOI (REGULAR BODY PART)
+                else chain[i].b = 2;
+
+
+                //drawDebug(chain, i);
+
+        }
+
+        // SAFEGUARD REGULAR BODY PART 
+        else  chain[i].b = 2;
+  
     }
 }
 
+// DRAW CHAIN
 
 function drawChain() {
+    // JUST DRAW EACH PART LOL 
     chain.forEach(drawChainPart)
 }
 
-function drawChainPart(chainPart) {
-    console.log("Chain: " + chainPart.x + " | " + chainPart.y + " | D: " + chainPart.d + " | B: " + chainPart.b);
 
+// DRAWING EACH PART
+
+function drawChainPart(chainPart) {
+    //console.log("Chain: " + chainPart.x + " | " + chainPart.y + " | D: " + chainPart.d + " | B: " + chainPart.b);
+    //console.log(" D: " + chainPart.d + " | B: " + chainPart.b);
+
+
+    // FINDING WHICH IMAGE TO DRAW, JUST INPUT VALUE LOGIC
     switch (chainPart.b) {
         case 1:
 
@@ -289,15 +541,65 @@ function drawChainPart(chainPart) {
 
             break;
 
+        case 4:
 
+            game.drawImage(monkeyElbowUR, chainPart.x, chainPart.y);
+
+            break;
+
+        case 5:
+
+            game.drawImage(monkeyElbowRD, chainPart.x, chainPart.y);
+
+            break;
+
+        case 6:
+
+            game.drawImage(monkeyElbowDL, chainPart.x, chainPart.y);
+
+            break;
+
+        case 7:
+
+            game.drawImage(monkeyElbowLU, chainPart.x, chainPart.y);
+
+            break;
+
+        case 8:
+
+            game.drawImage(monkeyElbowUL, chainPart.x, chainPart.y);
+
+            break;
+
+        case 9:
+
+            game.drawImage(monkeyElbowLD, chainPart.x, chainPart.y);
+
+            break;
+
+        case 10:
+
+            game.drawImage(monkeyElbowDR, chainPart.x, chainPart.y);
+
+            break;
+
+        case 11:
+
+            game.drawImage(monkeyElbowRU, chainPart.x, chainPart.y);
+
+            break;
+
+
+    }
 }
-}
+
+// CREATE FOOD RANDOMLY POSITIONED ON GRID
 
 function createFood() {
     foodX = randomTwenty(0, gameCanvas.width - 20);
     foodY = randomTwenty(0, gameCanvas.height - 20);
 
-    console.log("Food: " + foodX + " | " + foodY);
+    // console.log("Food: " + foodX + " | " + foodY);
 
     chain.forEach(function isChain(part) {
         const isBanana= part.x == foodX && part.y == foodY;
@@ -306,9 +608,14 @@ function createFood() {
 
 }
 
+// JUST DRAW THE IMAGE LOL
+
 function drawFood() {
     game.drawImage(bananaImg, foodX, foodY);
 }
+
+
+// FRAME RESET FOR EACH TICK | FOR CANVAS REDRAW EACH FRAME
 
 function clearCanvas() {
     //  Select the colour to fill the drawing
@@ -321,6 +628,8 @@ function clearCanvas() {
     // Draw a "border" around the entire canvas
     game.strokeRect(0, 0, gameCanvas.width, gameCanvas.height);
 }
+
+// KEY RECOGNITION AND DIRECTION CHANGE
 
 function changeDirection(event) {
 
@@ -362,6 +671,8 @@ function changeDirection(event) {
 
 }
 
+    // DID YOU DIE | CHECKS FOR WALL HITS | SELF HITS
+
     function didGameEnd() {
     for (let i = 4; i < chain.length; i++) {
         if (chain[i].x === chain[0].x && chain[i].y === chain[0].y) return true
@@ -375,17 +686,41 @@ function changeDirection(event) {
     return hitLeftWall || hitRightWall || hitToptWall || hitBottomWall
 }
 
-
+// random min max 20 clamp
 function randomTwenty(min, max) {
     return Math.round((Math.random() * (max - min) + min) / 20) * 20;
 }
 
+
+// DRAW THE SCORE ON SCREEN
 function drawScore() {
     game.font = "25px Courier New";
 
     game.fillStyle = "white";
 
     game.fillText(score, 10, 35);
+
+    game.fillStyle = "black";
+}
+
+function drawCredit() {
+    game.font = "10px Courier New";
+
+    game.fillStyle = "white";
+
+    game.fillText("KONA ©", 755, 595);
+
+    game.fillStyle = "black";
+}
+
+// COOL DEBUG :) ME LIKE ME MAKE ME COOL
+function drawDebug(chain, count) {
+    game.font = "25px Courier New";
+
+    game.fillStyle = "white";
+
+    game.fillText((" PREV: " + chain[count - 1].d  + " | CURR: " + chain[count].d + " | AHEAD: " + chain[count + 1].d), 10, 560);
+    game.fillText(("BODY: " + chain[count].b), 10, 530);
 
     game.fillStyle = "black";
 }
