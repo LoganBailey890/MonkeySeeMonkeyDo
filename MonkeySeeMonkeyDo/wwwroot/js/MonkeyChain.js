@@ -452,7 +452,7 @@ function advanceChain() {
                 else chain[i].b = 2;
 
 
-                drawDebug(chain, i);
+               // drawDebug(chain, i);
 
         }
 
