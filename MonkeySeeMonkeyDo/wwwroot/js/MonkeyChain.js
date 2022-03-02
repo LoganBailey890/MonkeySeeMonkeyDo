@@ -189,6 +189,7 @@ function main() {
         drawFood();
         drawChain(); main();
         drawScore();
+        drawCredit();
     }, 100)
 }
 
@@ -698,6 +699,16 @@ function drawScore() {
     game.fillStyle = "white";
 
     game.fillText(score, 10, 35);
+
+    game.fillStyle = "black";
+}
+
+function drawCredit() {
+    game.font = "10px Courier New";
+
+    game.fillStyle = "white";
+
+    game.fillText("KONA ©", 755, 595);
 
     game.fillStyle = "black";
 }
