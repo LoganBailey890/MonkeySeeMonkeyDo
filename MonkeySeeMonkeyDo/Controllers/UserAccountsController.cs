@@ -6,6 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using MonkeySeeMonkeyDo.Services;
 using MonkeySeeMonkeyDo.Models;
+using MongoDB.Bson;
+using MongoDB.Driver.Linq;
+using MongoDB.Driver;
 
 namespace MonkeySeeMonkeyDo.Controllers
 {
@@ -50,39 +53,79 @@ namespace MonkeySeeMonkeyDo.Controllers
         }
 
         // GET: UserAccountsController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var user = userService.Get(id);
+            if(user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
         }
 
         // POST: UserAccountsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(string id, UsersAccount users)
         {
-            try
+            if (id != users.Id)
             {
+                return NotFound();
+            }
+            if(ModelState.IsValid)
+            {
+                userService.Update(id, users);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            else
             {
-                return View();
+                return View(users);
             }
         }
 
-        // GET: UserAccountsController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Login(string userName, string Password)
         {
-            return View();
+
+        }
+
+
+        // GET: UserAccountsController/Delete/5
+        public ActionResult Delete(string id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var user = userService.Get(id);
+            if (user == null) 
+            {
+                return NotFound();
+            }
+
+            return View(user);
         }
 
         // POST: UserAccountsController/Delete/5
-        [HttpPost]
+        [HttpPost,ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(string id, IFormCollection collection)
         {
             try
             {
+                var user = userService.Get(id);
+
+                if(user == null)
+                {
+                    return NotFound();
+                }
+                userService.RemoveByID(user.Id);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
