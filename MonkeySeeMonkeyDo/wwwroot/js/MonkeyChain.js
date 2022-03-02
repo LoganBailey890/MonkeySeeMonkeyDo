@@ -370,7 +370,7 @@ function advanceChain() {
                 else if (chain[i - 1].d == 2 && chain[i + 1].d == 2) {
                     switch (chain[i].d) {
                         case 1:
-                            chain[i].b = 9;
+                            chain[i].b = 4;
                             break;
                         case 3:
                             chain[i].b = 10;
@@ -405,64 +405,61 @@ function advanceChain() {
 
                 // TEST 2
 
-                /*
-                 else if (chain[i - 1].d == 2 && chain[i + 1].d == 4) {
+                else if (chain[i - 1].d == 2 && chain[i + 1].d == 4) {
                     switch (chain[i].d) {
                         case 1:
-                            chain[i].b = 3;
+                            chain[i].b = 4;
                             break;
                         case 3:
-                            chain[i].b = 3;
+                            chain[i].b = 10;
                             break;
                     }
                 }
-
                 else if (chain[i - 1].d == 4 && chain[i + 1].d == 2) {
                     switch (chain[i].d) {
                         case 1:
-                            chain[i].b = 3;
+                            chain[i].b = 8;
                             break;
                         case 3:
-                            chain[i].b = 3;
+                            chain[i].b = 6;
                             break;
                     }
                 }
-
                 else if (chain[i - 1].d == 1 && chain[i + 1].d == 3) {
                     switch (chain[i].d) {
-                        case 1:
-                            chain[i].b = 3;
+                        case 2:
+                            chain[i].b = 11;
                             break;
-                        case 3:
-                            chain[i].b = 3;
+                        case 4:
+                            chain[i].b = 7;
                             break;
                     }
                 }
-
                 else if (chain[i - 1].d == 3 && chain[i + 1].d == 1) {
                     switch (chain[i].d) {
-                        case 1:
-                            chain[i].b = 3;
+                        case 2:
+                            chain[i].b = 5;
                             break;
-                        case 3:
-                            chain[i].b = 3;
+                        case 4:
+                            chain[i].b = 9;
                             break;
                     }
                 }
-                */
 
-
-
+                
+                
                 // ELSE JUST MAKE IT LONG BOI (REGULAR BODY PART)
                 else chain[i].b = 2;
 
 
-                //drawDebug(chain, i);
+                drawDebug(chain, i);
 
         }
 
         // SAFEGUARD REGULAR BODY PART 
-        else  chain[i].b = 2;
+        else chain[i].b = 2;
+
+       // drawDebug(chain, i);
   
     }
 }
