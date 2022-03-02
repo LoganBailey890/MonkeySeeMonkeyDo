@@ -22,6 +22,9 @@ namespace MonkeySeeMonkeyDo.Models
         [Required]
         public string Password { get; set; }
 
+        [BsonElement("Score")]
+        public int Score{get;set;}
+
         
 
     }
