@@ -90,6 +90,17 @@ monkeyElbowRU.src = "/images/Chain/Chain_Monkey_Elbow_RU.png";
 
 
 
+var startButton = new Image();
+startButton.src = "/images/Chain/StartButton.png";
+
+var restartButton = new Image();
+restartButton.src = "/images/Chain/RestartButton.png";
+
+var submitButton = new Image();
+submitButton.src = "/images/Chain/SubmitButton.png";
+
+
+
 var bananaImg = new Image();
 bananaImg.onload = imgLoaded;
 bananaImg.src = "/images/Chain/Chain_Banana.png";
@@ -136,39 +147,106 @@ function imgLoaded() {
 
     console.log("| ALL IMAGES LOADED |")
 
-    main();
+    waitStart();
 
     document.addEventListener("keydown", changeDirection);  
 
-
-
     createFood();
+
   
 }
 
+
+
+function waitStart() {
+
+    game.drawImage(startButton, 370, 300);
+
+    game.font = "25px Courier New";
+
+    game.fillStyle = "white";
+
+    game.fillText("MONKEY CHAIN :)", 300, 250);
+
+    game.fillStyle = "black";
+
+    //Binding the click event on the canvas
+    gameCanvas.addEventListener('click', onClickStart, false);
+
+}
+
+function onClickRestart(evt) {
+    var rect = {
+        x: 370,
+        y: 300,
+        width: 60,
+        height: 30
+    };
+
+    var mousePos = getMousePos(gameCanvas, evt);
+
+    if (isInside(mousePos, rect)) {
+        restartGame();
+        gameCanvas.removeEventListener('click', onClickRestart, false);
+    }
+}
+
+function onClickStart(evt) {
+    var rect = {
+        x: 370,
+        y: 300,
+        width: 60,
+        height: 30
+    };
+
+    var mousePos = getMousePos(gameCanvas, evt);
+
+    if (isInside(mousePos, rect)) {
+        main();
+        gameCanvas.removeEventListener('click', onClickStart, false);
+    }
+}
+
+function waitRestart() {
+
+    game.drawImage(restartButton, 370, 300);
+
+    game.font = "25px Courier New";
+
+    game.fillStyle = "white";
+
+    game.fillText("GAME OVER :(", 300, 250);
+
+    game.font = "15px Courier New";
+
+    game.fillText("Score | " + score, 355, 280);
+
+    game.fillStyle = "black";
+
+    gameCanvas.addEventListener('click', onClickRestart, false);
+
+}
 
 // MAIN FUNC GAME RUN
 
 function main() {
 
+ 
+
+
+
+  
+
+    
+     
 
     // RESET
 
     if (didGameEnd()) {
         
-        game.font = "25px Courier New";
-
-        game.fillStyle = "white";
- 
-        game.fillText("GAME OVER :(", 300, 300);
-
-        game.fillStyle = "black";
-
+       
+        waitRestart();
         // SUBMIT SCORE HERE
-
-        setTimeout(function onTick() {
-            restartGame();
-        }, 3000)
 
         /*
         var restartBtn = document.createElement("BUTTON");
@@ -721,3 +799,16 @@ function drawDebug(chain, count) {
 
     game.fillStyle = "black";
 }
+
+function getMousePos(canvas, event) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+    };
+}
+
+function isInside(pos, rect) {
+    return pos.x > rect.x && pos.x < rect.x + rect.width && pos.y < rect.y + rect.height && pos.y > rect.y
+}
+
