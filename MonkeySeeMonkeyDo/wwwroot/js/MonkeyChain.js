@@ -99,6 +99,10 @@ restartButton.src = "/images/Chain/RestartButton.png";
 var submitButton = new Image();
 submitButton.src = "/images/Chain/SubmitButton.png";
 
+const music = new Audio('/audio/Quetire.mp3');
+music.play();
+music.loop = true;
+music.playbackRate = 2;
 
 
 var bananaImg = new Image();
@@ -159,6 +163,10 @@ function imgLoaded() {
 
 
 function waitStart() {
+
+    music.play();
+    music.loop = true;
+    music.playbackRate = 1;
 
     game.drawImage(startButton, 370, 300);
 
