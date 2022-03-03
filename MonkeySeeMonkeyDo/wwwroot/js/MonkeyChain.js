@@ -230,14 +230,7 @@ function waitRestart() {
 // MAIN FUNC GAME RUN
 
 function main() {
-
- 
-
-
-
-  
-
-    
+   
      
 
     // RESET
