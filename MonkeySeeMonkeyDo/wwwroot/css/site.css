@@ -24,6 +24,16 @@ a {
   border-color: #1861ac;
 }
 
+#gameSize {
+    width: 550px;
+    position: center;
+}
+
+#runSize {
+    width: 550px;
+    position: center;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
