@@ -1,15 +1,21 @@
 ﻿var Canvas = document.getElementById('Canvas');
 var ctx = Canvas.getContext('2d');
 
-ctx.fillStyle = 'white';
-
 ctx.fillRect(0, 0, Canvas.clientWidth, Canvas.clientHeight);
 
 var monkeyImg = new Image();
 monkeyImg.src = "/images/Run/Monkee.png";
 
 var crateImg = new Image();
-crateImg.src = "/images/Run/BoxPog.png";
+crateImg.src = "/images/Run/BananaBox.png";
+
+var backgroundImg = new Image();
+backgroundImg.src = "/images/Run/ENDMYLIFEPLEASE.png";
+
+
+// document.body.style.backgroundImage = backgroundImg;
+
+
 
 // Variables
 let score;
@@ -151,7 +157,7 @@ function RandomIntInRange(min, max) {
 function Start() {
     //Canvas.width = window.innerWidth;
     //Canvas.height = window.innerHeight;
-
+    
     ctx.font = "20px sans-serif";
 
     gameSpeed = 3;
@@ -175,7 +181,10 @@ let initialSpawnTimer = 200;
 let spawnTimer = initialSpawnTimer;
 function Update() {
     requestAnimationFrame(Update);
+    drawBackground();
     ctx.clearRect(0, 0, Canvas.width, Canvas.height);
+
+
 
     spawnTimer--;
     if (spawnTimer <= 0) {
@@ -229,3 +238,12 @@ function Update() {
 }
 
 Start();
+
+
+
+
+
+function drawBackground()
+{
+    ctx.drawImage(backgroundImg, 0, 400);
+}
