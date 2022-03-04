@@ -60,16 +60,6 @@ namespace MonkeySeeMonkeyDo.Controllers
             return View();
         }
 
-        public IActionResult Create()
-        {
-            
-            return View("../UserAccounts/Create");
-        }
-/*        public ActionResult Create()
-        {
-            return this.RedirectToAction("Create", "UserAccountsController");
-        }*/
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
