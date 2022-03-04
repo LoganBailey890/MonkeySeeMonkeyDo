@@ -1,4 +1,10 @@
-﻿var DEBUG = false;
+﻿//import TitleScene from "./TitleScene.js";
+//import GameOver from "./GameOver.js";
+
+//let title = new TitleScene(this);
+//let gameOver = new GameOver();
+
+var DEBUG = false;
 
 var config = {
     type: Phaser.AUTO,
@@ -7,7 +13,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 350 },
             debug: false
         }
     },
@@ -19,52 +25,58 @@ var config = {
 };
 
 var game = new Phaser.Game(config);
+//game.scene.add("TitleScene", title);
+//game.scene.add("GameOver", gameOver);
+//game.scene.start("TitleScene");
 
 function preload() {
-    this.load.image('background', 'images/swing/forest.png');
-    this.load.image('ground', 'images/swing/platform.png');
-    this.load.image('banana', 'images/swing/banana.png');
-    this.load.image('bomb', 'images/swing/bomb.png');
-    this.load.image('monkey','images/swing/monkey.png');
+    this.load.image('background', '../images/swing/forest.png');
+    this.load.image('ground', '../images/swing/platform.png');
+    this.load.image('banana', '../images/swing/banana.png');
+    this.load.image('bomb', '../images/swing/bomb.png');
+    this.load.image('monkey','../images/swing/monkey.png');
 }
 
+var gameStarted = false;
 var target = new Phaser.Math.Vector2();
 var platforms;
+var bombs;
 var score = 0;
 var scoreText;
 var text1;
-var text2;
+var player = null;
+var bananas
+var titleText;
+var messageText;
 
 function create() {
     this.add.image(600, 400, 'background');
 
-    text1 = this.add.text(10, 10, '', { fill: '#00ff00' });
-    text2 = this.add.text(500, 10, '', { fill: '#00ff00' });
+    scoreText = this.add.text(16, 16, '', { fontSize: '32px', fill: '#000' });
 
-    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });  
+    this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    //this.input.keyboard.addKeyCapture([Phaser.Input.Keyboard.KeyCodes.SPACE]);
+
+    text1 = this.add.text(10, 10, '', { fill: '#00ff00' });
+    titleText = this.add.text(400, 200, 'Monkey Swing', { fontSize: "64px", fill: '#ffff00' });
+    messageText = this.add.text(400, 600, 'Press [Space] to Start', { fontSize: "32px", fill: '#ffff00' });
+
+    scoreText = this.add.text(16, 16, '', { fontSize: '32px', fill: '#000' });  
 
     platforms = this.physics.add.staticGroup();
 
-    platforms.create(600, 700, 'ground').setScale(3).refreshBody();
-
-    platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
-
     player = this.physics.add.sprite(100, 450, 'monkey').setScale(0.15).refreshBody();
+    player.disableBody(true, true);
 
-    player.setBounce(0.2);
-    player.setCollideWorldBounds(true);
-
-    stars = this.physics.add.group({
+    bananas = this.physics.add.group({
         key: 'banana',
         repeat: 16,
         setXY: { x: 12, y: 0, stepX: 70 },
-        setScale: {x: 0.125, y: 0.125}
+        setScale: { x: 0.125, y: 0.125 }
     });
 
-    stars.children.iterate(function (child) {
-        child.setBounceY(Phaser.Math.FloatBetween(0.3, 0.6));
+    bananas.children.iterate(function (child) {
+        child.disableBody(true, true);
     });
 
     bombs = this.physics.add.group();
@@ -73,8 +85,23 @@ function create() {
     this.physics.add.collider(player, bombs, hitBomb, null, this);
 
     this.physics.add.collider(player, platforms);
-    this.physics.add.collider(stars, platforms);
-    this.physics.add.overlap(player, stars, collectStar, null, this);
+    this.physics.add.collider(bananas, platforms);
+    this.physics.add.overlap(player, bananas, collectBananas, null, this);
+    /*platforms.create(600, 700, 'ground').setScale(3).refreshBody();
+
+    platforms.create(600, 400, 'ground');
+    platforms.create(50, 250, 'ground');
+    platforms.create(750, 220, 'ground');
+
+
+    player.setBounce(0.2);
+    player.setCollideWorldBounds(true);
+
+    stars.children.iterate(function (child) {
+        child.setBounceY(Phaser.Math.FloatBetween(0.3, 0.6));
+    };*/
+
+
 
     this.input.mouse.disableContextMenu();
 
@@ -92,6 +119,12 @@ function create() {
 function update() {
     var pointer = this.input.activePointer;
 
+    if (this.spaceKey.isDown && !gameStarted) {
+        gameStarted = true;
+
+        Init();
+    }
+
     if (pointer.isDown) {
         this.physics.moveToObject(player, target, 400);
     } 
@@ -104,25 +137,27 @@ function update() {
         ]);
     }
 
-    var distance = Phaser.Math.Distance.Between(player.x, player.y, target.x, target.y);
+    if (player != null) {
+        var distance = Phaser.Math.Distance.Between(player.x, player.y, target.x, target.y);
 
-    if (player.body.speed < 0) {
-        //  4 is our distance tolerance. The faster it moves, the more tolerance is required.
-        if (distance < 4) {
-            player.body.reset(target.x, target.y);
-            player.anims.stop();
+        if (player.body.speed < 0) {
+            //  4 is our distance tolerance. The faster it moves, the more tolerance is required.
+            if (distance < 4) {
+                player.body.reset(target.x, target.y);
+                player.anims.stop();
+            }
         }
     }
 }
 
-function collectStar(player, star) {
-    star.disableBody(true, true);
+function collectBananas(player, banana) {
+    banana.disableBody(true, true);
 
     score += 10;
     scoreText.setText('Score: ' + score);
 
-    if (stars.countActive(true) === 0) {
-        stars.children.iterate(function (child) {
+    if (bananas.countActive(true) === 0) {
+        bananas.children.iterate(function (child) {
 
             child.enableBody(true, child.x, 0, true, true);
 
@@ -146,4 +181,25 @@ function hitBomb(player, bomb) {
     player.anims.play('turn');
 
     gameOver = true;
+}
+
+function Init() {
+    platforms.create(600, 700, 'ground').setScale(3).refreshBody();
+
+    platforms.create(600, 400, 'ground');
+    platforms.create(50, 250, 'ground');
+    platforms.create(750, 220, 'ground');
+
+    player.enableBody(true, true);
+    titleText.destroy();
+    messageText.destroy();
+
+    player.setBounce(0.2);
+    player.setCollideWorldBounds(true);
+    player.enableBody(true, player.x, 100, true, true);
+
+    bananas.children.iterate(function (child) {
+        child.enableBody(true, child.x, 0, true, true);
+        child.setBounceY(Phaser.Math.FloatBetween(0.3, 0.6));
+    });
 }
