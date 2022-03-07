@@ -5,8 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using MongoDB.Driver;
+
 
 
 namespace MonkeySeeMonkeyDo.Controllers
@@ -25,7 +26,7 @@ namespace MonkeySeeMonkeyDo.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }
@@ -58,16 +59,6 @@ namespace MonkeySeeMonkeyDo.Controllers
         {
             return View();
         }
-
-        public IActionResult Create()
-        {
-            
-            return View("../UserAccounts/Create");
-        }
-/*        public ActionResult Create()
-        {
-            return this.RedirectToAction("Create", "UserAccountsController");
-        }*/
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
