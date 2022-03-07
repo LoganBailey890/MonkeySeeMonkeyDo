@@ -78,7 +78,7 @@ class PlayGameScene extends Phaser.Scene {
 	}
 
 	handleClick(event) {
-		tweens.killAll();
+		//tweens.killAll();
 
 		let offset = this.myKey;
 		let owner = this.scene;
