@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MonkeySeeMonkeyDo.Models;
+using MonkeySeeMonkeyDo.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +15,10 @@ namespace MonkeySeeMonkeyDo.Controllers
 {
     public class HomeController : Controller
     {
+
         private readonly ILogger<HomeController> _logger;
+
+        private IDataAccesLayer dal;
 
         public HomeController(ILogger<HomeController> logger)
         {
