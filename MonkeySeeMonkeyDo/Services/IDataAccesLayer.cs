@@ -16,7 +16,6 @@ namespace MonkeySeeMonkeyDo.Services
 
         Game GetGame(int gameId);
 
-
         void SetHighScore(PlayerHighScore highScore);
 
         
