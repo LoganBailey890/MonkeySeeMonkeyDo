@@ -224,12 +224,28 @@ function waitRestart() {
 
     gameCanvas.addEventListener('click', onClickRestart, false);
 
+    $.post({ url: 'Submit', scoreIn: score });
+
+        $.ajax({
+        url: 'Submit',
+        type: 'POST',
+        data: { scoreIn: score },
+        success: function (result) {
+            console.log("score submitted");
+        }
+          });
+/*
+    var url = '@Url.Action("Submit")' + '?a=' + score;
+    console.log(url);
+    document.location = url;*/
+
 }
 
 // MAIN FUNC GAME RUN
 
 function main() {
-   
+
+
      
 
     // RESET

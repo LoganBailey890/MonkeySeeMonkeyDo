@@ -8,19 +8,17 @@
 
 <div id="Game" class="text-center">
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-9">
             <canvas id="gameCanvas" width="800" height="600">
             </canvas>
         </div>
-        <div class="col-sm-4">
-            <h1> @ViewBag.highScoreList[0].Game.Name</h1>
-            <h1> @ViewBag.highScoreList[0].Id</h1>
-            <h1> @ViewBag.highScoreList[0].HighScore</h1>
+        <div class="col-sm-3 border flex-fill">
+            <h1 class="leaderboard"> @ViewBag.highScoreList[0].Game.Name</h1>
+            <p class="score">@ViewBag.highScoreList[0].Id |  @ViewBag.highScoreList[0].HighScore</p>
+            <p class="score">@ViewBag.highScoreList[1].Id |  @ViewBag.highScoreList[1].HighScore</p>
+            <p class="score">@ViewBag.highScoreList[2].Id |  @ViewBag.highScoreList[2].HighScore</p>
+            
         </div>
     </div>
-   
-
-    
-
     <script src="~/js/MonkeyChain.js"></script>
 </div>
