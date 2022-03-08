@@ -7,11 +7,20 @@
 </div>
 
 <div id="Game" class="text-center">
-    <canvas id="gameCanvas" width="800" height="600">
-    </canvas>
-
+    <div class="row">
+        <div class="col-sm-8">
+            <canvas id="gameCanvas" width="800" height="600">
+            </canvas>
+        </div>
+        <div class="col-sm-4">
+            <h1> @ViewBag.highScoreList[0].Game.Name</h1>
+            <h1> @ViewBag.highScoreList[0].Id</h1>
+            <h1> @ViewBag.highScoreList[0].HighScore</h1>
+        </div>
+    </div>
    
 
-    <script src="~/js/MonkeyChain.js"></script>
+    
 
+    <script src="~/js/MonkeyChain.js"></script>
 </div>

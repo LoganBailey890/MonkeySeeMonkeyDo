@@ -12,12 +12,25 @@ namespace MonkeySeeMonkeyDo.Models
         [Required]
         public int? Id { get; set; }
 
-        public String HighScoreName { get; set; }
-
-        public int GameId { get; set; }
-
         public Game Game { get; set; }
 
         public float HighScore { get; set; }
+
+
+        public PlayerHighScore() { }
+
+        public PlayerHighScore (Game game, float highScore)
+        {
+            this.Game = game;
+            this.HighScore = highScore;
+        }
+
+        public PlayerHighScore(int id, Game game, float highScore)
+        {
+            this.Id = id;
+            this.Game = game;
+            this.HighScore = highScore;
+
+        }
     }
 }

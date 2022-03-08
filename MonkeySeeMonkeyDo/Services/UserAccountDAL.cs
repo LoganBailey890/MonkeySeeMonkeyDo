@@ -32,7 +32,7 @@ namespace MonkeySeeMonkeyDo.Services
         public PlayerHighScore GetGameHighScore(int gameId)
         {
             return _db.PlayerHighScores
-                .Where(g => g.GameId == gameId)
+                .Where(g => g.Game.Id == gameId)
                 .Include(g => g.Game)
                 .FirstOrDefault();
         }
@@ -43,14 +43,14 @@ namespace MonkeySeeMonkeyDo.Services
             // String email = User.FindFirstValue(ClaimTypes.Email);
         
             return _db.PlayerHighScores
-                .Where(g => g.HighScoreName == highScoreName)
+                .Where(g => g.Game.Name == highScoreName)
                 .Include(g => g.Game)
                 .ToList();
         }
 
         public void SetHighScore(PlayerHighScore highScore)
         {
-            PlayerHighScore existingHighScore = GetGameHighScore(highScore.GameId);
+            PlayerHighScore existingHighScore = GetGameHighScore(highScore.Game.Id);
 
             if(existingHighScore != null)
             {

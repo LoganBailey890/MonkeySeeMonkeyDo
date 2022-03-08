@@ -9,9 +9,18 @@ namespace MonkeySeeMonkeyDo.Models
     public class Game
     {
         [Required]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [MaxLength(150)]
-        public String Name { get; set; }
+        public string Name { get; set; }
+
+
+        public Game( int id, string name)
+        {
+            this.Id = id;
+            this.Name = name;
+        }
+
+        public Game() { }  
     }
 }
