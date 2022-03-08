@@ -16,6 +16,9 @@ namespace MonkeySeeMonkeyDo.Controllers
     public class HomeController : Controller
     {
 
+        Game MonkeyChain = new Game(1, "Monkey Chain");
+
+
         private readonly ILogger<HomeController> _logger;
 
         private IDataAccesLayer dal;
@@ -51,6 +54,22 @@ namespace MonkeySeeMonkeyDo.Controllers
 
         public IActionResult MonkeySnake()
         {
+
+            List<PlayerHighScore> temp = new List<PlayerHighScore>();
+
+            PlayerHighScore player1 = new PlayerHighScore(1, MonkeyChain, 30);
+
+            temp.Add(player1);
+
+
+
+
+            ViewBag.scoreInput = 0;
+
+            ViewBag.highScoreList = temp;
+
+
+
             return View();
         }
 
