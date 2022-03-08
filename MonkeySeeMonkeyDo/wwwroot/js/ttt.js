@@ -67,10 +67,10 @@ class PlayGameScene extends Phaser.Scene {
 					playerSprite: null,
 				});
 
-				let textVal = 'myKey: ' + blankSquare.myKey.toString();
+/*				let textVal = 'myKey: ' + blankSquare.myKey.toString();
 				let label = self.add.text(x, y, textVal,
 					{ fontSize: '16px Arial', fill: '#000' });
-				label.setOrigin(0.5, 0.5);
+				label.setOrigin(0.5, 0.5);*/
 			}
 		}
 
@@ -78,7 +78,7 @@ class PlayGameScene extends Phaser.Scene {
 	}
 
 	handleClick(event) {
-		tweens.killAll();
+		//tweens.killAll();
 
 		let offset = this.myKey;
 		let owner = this.scene;
@@ -130,7 +130,7 @@ class PlayGameScene extends Phaser.Scene {
 			targets: label,
 			alpha: 0,
 			ease: 'Power1',
-			duration: 1000,
+			duration: 750,
 		});
 	}
 
@@ -189,7 +189,7 @@ class PlayGameScene extends Phaser.Scene {
 		}
 
 		let label = this.add.text(x, y, t,
-			{ fontSize: '104px Arial', fill: '#00F', backgroundColor: '#00F' });
+			{ fontSize: '104px Arial', fill: '#EC1', backgroundColor: '#FD0' });
 		label.setOrigin(0.5, 0.5);
 
 		label.setInteractive();
@@ -199,7 +199,7 @@ class PlayGameScene extends Phaser.Scene {
 		}, this);
 
 		label = this.add.text(x, y, t,
-			{ fontSize: '104px Arial', fill: '#0F0' });
+			{ fontSize: '104px Arial', fill: '#31F' });
 		label.setOrigin(0.5, 0.5);
 
 		this.tweens.add({

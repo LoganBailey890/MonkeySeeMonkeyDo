@@ -39,6 +39,11 @@ a {
     position: center;
 }
 
+#TTTSize {
+    width: 400px;
+    text-align: center;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
