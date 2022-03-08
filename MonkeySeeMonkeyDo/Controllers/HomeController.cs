@@ -64,6 +64,11 @@ namespace MonkeySeeMonkeyDo.Controllers
             return View();
         }
 
+        public IActionResult LeaderBoard()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
