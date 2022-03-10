@@ -55,7 +55,6 @@ function create() {
     scoreText = this.add.text(16, 16, '', { fontSize: '32px', fill: '#000' });
 
     this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-    //this.input.keyboard.addKeyCapture([Phaser.Input.Keyboard.KeyCodes.SPACE]);
 
     text1 = this.add.text(10, 10, '', { fill: '#00ff00' });
     titleText = this.add.text(400, 200, 'Monkey Swing', { fontSize: "64px", fill: '#ffff00' });
@@ -87,21 +86,6 @@ function create() {
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(bananas, platforms);
     this.physics.add.overlap(player, bananas, collectBananas, null, this);
-    /*platforms.create(600, 700, 'ground').setScale(3).refreshBody();
-
-    platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
-
-
-    player.setBounce(0.2);
-    player.setCollideWorldBounds(true);
-
-    stars.children.iterate(function (child) {
-        child.setBounceY(Phaser.Math.FloatBetween(0.3, 0.6));
-    };*/
-
-
 
     this.input.mouse.disableContextMenu();
 
@@ -122,6 +106,12 @@ function update() {
     if (this.spaceKey.isDown && !gameStarted) {
         gameStarted = true;
 
+        bombs.children.iterate(function (child) {
+            child.disableBody(true, true);
+        });
+
+        player.setTint(0xffffff);
+        this.physics.resume();
         Init();
     }
 
@@ -178,9 +168,11 @@ function hitBomb(player, bomb) {
 
     player.setTint(0xff0000);
 
-    player.anims.play('turn');
+    titleText = this.add.text(400, 200, 'Game Over', { fontSize: "64px", fill: '#ffff00' });
+    messageText = this.add.text(400, 600, 'Press [Space] to Start', { fontSize: "32px", fill: '#ffff00' });
 
-    gameOver = true;
+    score = 0;
+    gameStarted = false;
 }
 
 function Init() {
