@@ -107,3 +107,16 @@ body {
 .fourth-color {
     background: #f8b500;
 }
+
+
+.leaderboard {
+
+    font-family: Courier New;
+    font-size : 30px;
+}
+
+.score {
+
+    font-family: Courier New;
+    font-size : 25px;
+}

@@ -10,7 +10,7 @@ namespace MonkeySeeMonkeyDo.Services
 {
     public class UserAccountDAL : IDataAccesLayer
     {
-        private UserAccount _db;
+        public UserAccount _db;
         public UserAccountDAL(UserAccount userAccount)
         {
             _db = userAccount;

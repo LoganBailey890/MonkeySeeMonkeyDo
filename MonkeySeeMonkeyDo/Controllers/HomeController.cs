@@ -57,9 +57,17 @@ namespace MonkeySeeMonkeyDo.Controllers
 
             List<PlayerHighScore> temp = new List<PlayerHighScore>();
 
-            PlayerHighScore player1 = new PlayerHighScore(1, MonkeyChain, 30);
+            PlayerHighScore player1 = new PlayerHighScore(1, MonkeyChain, 450);
 
             temp.Add(player1);
+
+            PlayerHighScore player2 = new PlayerHighScore(2, MonkeyChain, 590);
+
+            temp.Add(player2);
+
+            PlayerHighScore player3 = new PlayerHighScore(3, MonkeyChain, 800);
+
+            temp.Add(player3);
 
 
 
@@ -83,10 +91,29 @@ namespace MonkeySeeMonkeyDo.Controllers
             return View();
         }
 
+        public IActionResult LeaderBoard()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+      /*  [HttpPost]
+        public ActionResult Submit(int scoreIN)
+        {
+            PlayerHighScore temp = new PlayerHighScore(, MonkeyChain, scoreIN);
+
+            String id = 
+
+                dal._
+
+            dal.SetHighScore(temp);
+
+            return new EmptyResult();
+        }*/
     }
 }
